@@ -1,4 +1,4 @@
-import { addListener, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 import axios from 'axios';
 
