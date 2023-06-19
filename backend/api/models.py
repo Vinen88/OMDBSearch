@@ -26,7 +26,7 @@ class SavedResult(models.Model):
     Language = models.CharField(max_length=100, blank=True)
     Country = models.CharField(max_length=100, blank=True)
     Awards = models.CharField(max_length=100, blank=True)
-    Poster = models.CharField(max_length=100, blank=True)
+    Poster = models.CharField(max_length=250, blank=True)
     Ratings = models.JSONField(blank=True)
     Metascore = models.CharField(max_length=10, blank=True)
     imdbRating = models.CharField(max_length=10, blank=True)

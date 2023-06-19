@@ -15,11 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from api.views import SearchView, SaveView
+from django.urls import path, re_path
+from api.views import SearchView, SaveView, MoviesView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('search/', SearchView.as_view(), name='search'),
+    #re_path(r'^search/?P<query>[A-Za-z0-9"]$', SearchView.as_view(), name='search'),
     path('save/', SaveView.as_view(), name='save'),
+    path('movies/', MoviesView.as_view(), name='movies'),
 ]

@@ -7,11 +7,11 @@
 import React from 'react';
 
 import { useDispatch } from 'react-redux';
-import { removeResult } from '../../app/movieSlice';
+import { saveMovie } from '../../app/movieSlice';
 
 import { Card, CardActions, CardMedia, CardContent, Typography, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import ClearIcon from '@material-ui/icons/Clear';
+import SaveIcon from '@material-ui/icons/Save';
 
 
 // Use a question mark as a placeholder image for movies that have no poster.
@@ -21,10 +21,15 @@ const noPosterImg = "https://upload.wikimedia.org/wikipedia/commons/2/28/Questio
 // images larger than the default.
 const CardPosterMedia = withStyles({
   media: {
-    height: '40em',
+    height: '30em',
   },
 })(CardMedia);
 
+const handleClick = (event) => {
+  event.currentTarget.disabled = true;
+  event.currentTarget.innerText = "Saved";
+  event.currentTarget.style.backgroundColor = "#4caf50";
+};
 
 function Result(props) {
 
@@ -54,10 +59,15 @@ function Result(props) {
         <Button
           variant="outlined"
           size="small"
-          startIcon={<ClearIcon />}
-          onClick={() => dispatch(removeResult(props.index))}
+          startIcon={<SaveIcon />}
+          disabled={ props.data['saved'] }
+          onClick={(e) => {
+            handleClick(e);
+            dispatch(saveMovie(props.data['imdbID']));
+          }
+          } 
         >
-          Delete
+          Save
         </Button>
       </CardActions>
     </Card>

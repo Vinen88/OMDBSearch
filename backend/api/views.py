@@ -14,8 +14,8 @@ OMDB_API_KEY = os.getenv("OMDB_API_KEY")
 # Create your views here.
 class SearchView(APIView):
     def get(self, request, *args, **kwargs):
-        query = request.data['query']
-        url = "http://www.omdbapi.com/?s=\"" + query + "\"&apikey="+OMDB_API_KEY # type: ignore
+        query = request.query_params.get('query')
+        url = "http://www.omdbapi.com/?s=\"" + query + "\"&apikey="+OMDB_API_KEY+"&type=movie" # type: ignore
         api_call = requests.get(url)
         data = api_call.json()
         search_result = data['Search']
@@ -28,17 +28,23 @@ class SearchView(APIView):
     
 class SaveView(APIView):
     def post(self, request, *args, **kwargs):
-        imdbID = request.data['imdbID']
+        imdbID = request.data['imdbID'] #check if already in db
+        if SavedResult.objects.filter(imdbID=imdbID).exists():
+            print("ALREADY SAVED")
+            return Response({'Response': "false"})
         url = "http://www.omdbapi.com/?i=" + imdbID + "&apikey="+OMDB_API_KEY # type: ignore
         api_call = requests.get(url) # serialize data and save to db
         data = api_call.json()
-        pprint(data)
         if data['Response'] == "True":
+            pprint(data)
             serializer = SavedSerializer(data=data)
+            print("SAVING...")
             if serializer.is_valid():
                 serializer.save()
+                print("SAVED!!!!")
                 return Response({'Response': "true"})
             else:
+                print(serializer.errors)
                 return Response({'Response': "false"})
     
     def get(self, request, *args, **kwargs):
@@ -49,3 +55,9 @@ class SaveView(APIView):
             return Response(serialized.data)
         else:
             return Response({'Response': "false"})
+
+class MoviesView(APIView):
+    def get(self, request, *args, **kwargs):
+        movies = SavedResult.objects.all()
+        serialized = SavedSerializer(movies, many=True)
+        return Response(serialized.data)

@@ -2,9 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import axios from 'axios';
 
-const omdbUrl = 'http://www.omdbapi.com/';
 
-const databaseurl = 'http://localhost:5000/api/movies';
+const databaseurl = 'http://localhost:8000';
 
 export const moviesSlice = createSlice({
     name: 'movies',
@@ -37,12 +36,10 @@ export const moviesSlice = createSlice({
 export const fetchMovies = query => dispatch => {
 
     // Perform a GET request on the API for movies matching the query.
-    axios.get(omdbUrl,
+    axios.get(databaseurl + "/search/",
       {
         params: {
-          'apikey': process.env.REACT_APP_OMDB_KEY,
-          's': query,
-          'type': 'movie',
+          'query': query,
         },
       },
     ).then(response => {
@@ -60,7 +57,18 @@ export const fetchMovies = query => dispatch => {
 };
 
 export const saveMovie = movie => dispatch => {
-  axios.post(databaseurl, movie)
+
+  axios.post(databaseurl + "/save/", {'imdbID': movie}
+  ).then(response => {
+    if (response.data['Response'] === 'True') {
+      alert(response.data['Response']);
+    } else {
+      alert(response.data['Error']);
+    }
+  }).catch(err => {
+    alert(err);
+  })
+      
 };
 
 // Export the non-asynchronous reducer actions: setResults and removeResult
