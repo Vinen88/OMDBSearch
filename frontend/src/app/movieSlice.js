@@ -60,10 +60,10 @@ export const saveMovie = movie => dispatch => {
 
   axios.post(databaseurl + "/save/", {'imdbID': movie}
   ).then(response => {
-    if (response.data['Response'] === 'True') {
-      alert(response.data['Response']);
+    if (response.data['Response'] === 'true') {
+      console.log("Saved");
     } else {
-      alert(response.data['Error']);
+      console.log("Not saved - something went wrong or already in DB");
     }
   }).catch(err => {
     alert(err);
