@@ -18,6 +18,7 @@ class SearchView(APIView):
         url = "http://www.omdbapi.com/?s=\"" + query + "\"&apikey="+OMDB_API_KEY+"&type=movie" # type: ignore
         api_call = requests.get(url)
         data = api_call.json()
+        print(data['totalResults'])
         search_result = data['Search']
         # check if data is already in database and add saved to json.
         for i in range(len(search_result)):
@@ -28,7 +29,7 @@ class SearchView(APIView):
     
 class SaveView(APIView):
     def post(self, request, *args, **kwargs):
-        imdbID = request.data['imdbID'] #check if already in db
+        imdbID = request.data['imdbID']
         if SavedResult.objects.filter(imdbID=imdbID).exists():
             print("ALREADY SAVED")
             return Response({'Response': "false"})
@@ -36,7 +37,6 @@ class SaveView(APIView):
         api_call = requests.get(url) # serialize data and save to db
         data = api_call.json()
         if data['Response'] == "True":
-            pprint(data)
             serializer = SavedSerializer(data=data)
             print("SAVING...")
             if serializer.is_valid():
