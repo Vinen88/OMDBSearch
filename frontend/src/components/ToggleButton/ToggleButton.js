@@ -6,6 +6,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { fetchMovies, fetchSavedMovies } from '../../app/movieSlice';
 import SearchIcon from '@mui/icons-material/Search';
 import SaveIcon from '@mui/icons-material/Save';
+import { Typography } from '@mui/material';
 
 
 
@@ -29,9 +30,11 @@ export default function ToggleButtons(props) {
          >
             <ToggleButton value="search" aria-label="search">
                 <SearchIcon />
+                Search
             </ToggleButton>
             <ToggleButton value="saved" aria-label="saved">
                 <SaveIcon />
+                Saved Movies
             </ToggleButton>
          </ToggleButtonGroup>
     );

@@ -25,6 +25,7 @@ function ResultButton(props){
             <Button
                 variant="outlined"
                 size="small"
+                color = "error"
                 startIcon={<DeleteIcon />}
                 onClick={(e) => {
                     setSaved(false);
@@ -40,6 +41,7 @@ function ResultButton(props){
           variant="outlined"
           size="small"
           startIcon={<SaveIcon />}
+          color = "success"
           disabled={ saved }
           onClick={(e) => {
             handleSaveClick(e, props.data['imdbID']);

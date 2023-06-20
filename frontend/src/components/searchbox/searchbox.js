@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 
 import { fetchMovies } from '../../app/movieSlice';
 
-import { Container, Typography, Grid, Button, TextField } from '@mui/material';
+import { Container, Typography, Grid, Button, TextField, createTheme, GlobalStyles } from '@mui/material';
 
 import ToggleButton from '../ToggleButton/ToggleButton';
 
@@ -20,11 +20,10 @@ import styles from './SearchBox.module.css';
 // with a red outline for the search box (instead of a white outline)
 
 
-
 export default function SearchBox() {
   const [query, setQuery] = useState(''); // Contains the query typed in the search field
   const dispatch = useDispatch();
-
+  const blue = '#2196f3';
   return (
     <React.Fragment>
       <div className={styles.containerParent}>
@@ -58,7 +57,7 @@ export default function SearchBox() {
             <Grid item>
               <Button
                 variant="contained"
-                color="primary"
+                style={{backgroundColor: blue, color: 'white'}}
                 startIcon={<SearchIcon />}
                 onClick={() => dispatch(fetchMovies(query))}
               >
