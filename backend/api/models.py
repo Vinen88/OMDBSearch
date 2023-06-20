@@ -37,6 +37,7 @@ class SavedResult(models.Model):
     BoxOffice = models.CharField(max_length=20, blank=True)
     Production = models.CharField(max_length=100, blank=True)
     Website = models.CharField(max_length=100, blank=True)
+    saved = models.BooleanField(default=True)
     Response = models.CharField(max_length=10) #idk why its documented as wanted saving this is kinda silly
     
     def __str__(self) -> str:

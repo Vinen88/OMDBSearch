@@ -1,7 +1,6 @@
 import React from 'react';
 import SearchBox from '../components/searchbox/searchbox';
 import ResultsList from '../components/results/resultsList';
-import ToggleButtons from '../components/ToggleButton/ToggleButton';
 import './search.css';
 
 function Search() {

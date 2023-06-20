@@ -31,17 +31,14 @@ class SaveView(APIView):
     def post(self, request, *args, **kwargs):
         imdbID = request.data['imdbID']
         if SavedResult.objects.filter(imdbID=imdbID).exists():
-            print("ALREADY SAVED")
             return Response({'Response': "false"})
         url = "http://www.omdbapi.com/?i=" + imdbID + "&apikey="+OMDB_API_KEY # type: ignore
         api_call = requests.get(url) # serialize data and save to db
         data = api_call.json()
         if data['Response'] == "True":
             serializer = SavedSerializer(data=data)
-            print("SAVING...")
             if serializer.is_valid():
                 serializer.save()
-                print("SAVED!!!!")
                 return Response({'Response': "true"})
             else:
                 print(serializer.errors)
@@ -61,3 +58,13 @@ class MoviesView(APIView):
         movies = SavedResult.objects.all()
         serialized = SavedSerializer(movies, many=True)
         return Response(serialized.data)
+
+class DeleteView(APIView):
+    def post(self, request, *args, **kwargs):
+        imdbID = request.data['imdbID']
+        if SavedResult.objects.filter(imdbID=imdbID).exists():
+            movie = SavedResult.objects.get(imdbID=imdbID)
+            movie.delete()
+            return Response({'Response': "true"})
+        else:
+            return Response({'Response': "false"})

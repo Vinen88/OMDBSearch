@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
-from api.views import SearchView, SaveView, MoviesView
+from api.views import SearchView, SaveView, MoviesView, DeleteView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +24,5 @@ urlpatterns = [
     #re_path(r'^search/?P<query>[A-Za-z0-9"]$', SearchView.as_view(), name='search'),
     path('save/', SaveView.as_view(), name='save'),
     path('movies/', MoviesView.as_view(), name='movies'),
+    path('delete/', DeleteView.as_view(), name='delete'),
 ]

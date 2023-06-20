@@ -23,7 +23,9 @@ export const moviesSlice = createSlice({
        * provided index (action.payload)
        */
       removeResult: (state, action) => {
-        state.results.splice(action.payload, 1);
+        //state.results.splice(action.payload, 1);
+        // remove the movie from state.results that matches the provided imdbID
+        state.results = state.results.filter(movie => movie.imdbID !== action.payload);
       },
     },
   });
@@ -36,7 +38,7 @@ export const moviesSlice = createSlice({
 export const fetchMovies = query => dispatch => {
 
     // Perform a GET request on the API for movies matching the query.
-    if (query === undefined ) {
+    if (query === undefined || query === "") {
       dispatch(setResults([]));
       return;
     } 
@@ -79,7 +81,7 @@ export const fetchSavedMovies = () => dispatch => {
   axios.get(databaseurl + "/movies/",
   ).then(response => {
     if (response.data) {
-    dispatch(setResults(response.data));
+      dispatch(setResults(response.data));
     } else {
       console.log("Error loading saved movies");
     }
@@ -88,8 +90,23 @@ export const fetchSavedMovies = () => dispatch => {
   })
 };
 
+export const deleteMovie = movie => dispatch => {
+  // update the results state to remove the movie with the provided imdbID
+  axios.post(databaseurl + "/delete/", {'imdbID': movie}
+  ).then(response => {
+    if (response.data['Response'] === 'true') {
+      dispatch(removeResult(movie));
+      console.log("Deleted");
+    } else {
+      console.log("Not deleted - something went wrong");
+    }
+  }).catch(err => {
+    alert(err);
+  })
+};
+
 // Export the non-asynchronous reducer actions: setResults and removeResult
-export const { setResults, removeResult } = moviesSlice.actions;
+export const { setResults, removeResult, shouldReload } = moviesSlice.actions;
 
 // Export the movie results selector
 export const selectMovies = state => state.movies.results;

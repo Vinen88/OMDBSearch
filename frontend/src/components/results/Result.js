@@ -8,6 +8,8 @@ import React from 'react';
 
 import { useDispatch } from 'react-redux';
 import { saveMovie } from '../../app/movieSlice';
+import { deleteMovie } from '../../app/movieSlice';
+import ResultButton from './ResultButton';
 
 import { Card, CardActions, CardMedia, CardContent, Typography, Button } from '@mui/material';
 
@@ -52,20 +54,8 @@ function Result(props) {
           {props.data['Year']}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button
-          variant="outlined"
-          size="small"
-          startIcon={<SaveIcon />}
-          disabled={ props.data['saved'] }
-          onClick={(e) => {
-            handleClick(e);
-            dispatch(saveMovie(props.data['imdbID']));
-          }
-          } 
-        >
-          Save
-        </Button>
+      <CardActions style={{justifyContent: 'right'}}>
+        <ResultButton data={props.data} />
       </CardActions>
     </Card>
   );
