@@ -36,6 +36,10 @@ export const moviesSlice = createSlice({
 export const fetchMovies = query => dispatch => {
 
     // Perform a GET request on the API for movies matching the query.
+    if (query === undefined ) {
+      dispatch(setResults([]));
+      return;
+    } 
     axios.get(databaseurl + "/search/",
       {
         params: {
@@ -69,6 +73,19 @@ export const saveMovie = movie => dispatch => {
     alert(err);
   })
       
+};
+
+export const fetchSavedMovies = () => dispatch => {
+  axios.get(databaseurl + "/movies/",
+  ).then(response => {
+    if (response.data) {
+    dispatch(setResults(response.data));
+    } else {
+      console.log("Error loading saved movies");
+    }
+  }).catch(err => {
+    alert(err);
+  })
 };
 
 // Export the non-asynchronous reducer actions: setResults and removeResult

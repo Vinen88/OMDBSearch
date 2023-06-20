@@ -7,29 +7,18 @@ import { useDispatch } from 'react-redux';
 
 import { fetchMovies } from '../../app/movieSlice';
 
-import { Container, Typography, Grid, Button, TextField } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
+import { Container, Typography, Grid, Button, TextField } from '@mui/material';
+
+import ToggleButton from '../ToggleButton/ToggleButton';
+
+
+import SearchIcon from '@mui/icons-material/Search';
 
 import styles from './SearchBox.module.css';
 
 // To match the app's color scheme, use a text field
 // with a red outline for the search box (instead of a white outline)
-const RedTextField = withStyles({
-  root: {
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: '#da0000',
-      },
-      '&:hover fieldset': {
-        borderColor: '#da0000',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#da0000',
-      },
-    },
-  },
-})(TextField);
+
 
 
 export default function SearchBox() {
@@ -52,7 +41,7 @@ export default function SearchBox() {
 
           <Grid container spacing={2} justifyContent="center">
             <Grid item>
-              <RedTextField
+              <TextField
                 value={query}
                 onChange={e => setQuery(e.target.value)}
                 onKeyDown={(e) => {
@@ -77,7 +66,7 @@ export default function SearchBox() {
               </Button>
             </Grid>
           </Grid>
-              
+          <ToggleButton data={query} />    
         </Container>
       </div>
     </React.Fragment>

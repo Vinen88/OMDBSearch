@@ -1,15 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import SearchBox from './components/searchbox/searchbox';
-import ResultsList from './components/results/resultsList';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Search from './containers/search';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <SearchBox />
-      <ResultsList />
+      <BrowserRouter>
+        <Routes>
+          <Route exact path="/" element={ <Search/> } />
+        </Routes>
+    </BrowserRouter>
     </div>
   );
 }

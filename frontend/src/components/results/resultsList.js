@@ -8,19 +8,14 @@ import { selectMovies } from '../../app/movieSlice';
 
 import Result from './Result';
 
-import { Container, Grid } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { Grid } from '@mui/material';
+import Container from '@mui/material/Container';
+
 
 import styles from './ResultsGrid.module.css';
 
 // To make the results better fit the page, allow the results grid container's
 // max width to be 90%.
-const ResultsContainer = withStyles({
-  maxWidthLg: {
-    'max-width': '90%',
-  }
-})(Container);
-
 
 export default function ResultsGrid() {
 
@@ -29,7 +24,7 @@ export default function ResultsGrid() {
 
   return (
     <React.Fragment>
-      <ResultsContainer className={styles.container}>
+      <Container className={styles.container}>
 
         {/* Map each movie result into its own Result component in a grid.
             Pass down the index that the movie is located at in the results
@@ -44,7 +39,7 @@ export default function ResultsGrid() {
           ))}
         </Grid>
             
-      </ResultsContainer>
+      </Container>
     </React.Fragment>
   );
 }

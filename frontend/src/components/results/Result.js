@@ -9,9 +9,9 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { saveMovie } from '../../app/movieSlice';
 
-import { Card, CardActions, CardMedia, CardContent, Typography, Button } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import SaveIcon from '@material-ui/icons/Save';
+import { Card, CardActions, CardMedia, CardContent, Typography, Button } from '@mui/material';
+
+import SaveIcon from '@mui/icons-material/Save';
 
 
 // Use a question mark as a placeholder image for movies that have no poster.
@@ -19,11 +19,7 @@ const noPosterImg = "https://upload.wikimedia.org/wikipedia/commons/2/28/Questio
 
 // To show more of each movie poster, make the height of the
 // images larger than the default.
-const CardPosterMedia = withStyles({
-  media: {
-    height: '30em',
-  },
-})(CardMedia);
+
 
 const handleClick = (event) => {
   event.currentTarget.disabled = true;
@@ -37,7 +33,8 @@ function Result(props) {
   
   return (
     <Card>
-      <CardPosterMedia
+      <CardMedia
+        sx={{ height: 500 }}
         component="img"
         alt="Movie Poster"
         image={
