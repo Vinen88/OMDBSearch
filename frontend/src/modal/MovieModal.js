@@ -9,17 +9,6 @@ import Rating from '@mui/material/Rating';
 import { CardContent, Card, CardMedia, CardActions } from "@mui/material";
 import ResultButton from "../components/results/ResultButton";
 
-const style = {
-    position: 'absolute',
-    top: '40%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    maxWidth: 365,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
 const noPosterImg = "https://upload.wikimedia.org/wikipedia/commons/2/28/Question_mark_white.png";
 
 
