@@ -1,11 +1,7 @@
 import React, { useEffect } from "react";
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useDispatch } from 'react-redux';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { styled } from '@mui/material/styles';
 import { fetchmoviedetails } from "../app/movieSlice";
 import { useSelector } from 'react-redux';
 import { selectDetailed } from '../app/movieSlice';

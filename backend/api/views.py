@@ -57,11 +57,13 @@ class DetailedMovieView(APIView):
     #view for getting detailed movie info for modal/popup when clicking poster
     def get(self, request, *args, **kwargs):
         imdbID = request.query_params.get('imdbID')
+        if SavedResult.objects.filter(imdbID=imdbID).exists():
+            movie = SavedResult.objects.get(imdbID=imdbID)
+            serializer = SavedSerializer(movie)
+            return Response(serializer.data)
         url = "http://www.omdbapi.com/?i=" + imdbID + "&apikey="+OMDB_API_KEY
         api_call = requests.get(url)
         data = api_call.json()
-        if data['Response'] == "True":
-            data['saved'] = SavedResult.objects.filter(imdbID=imdbID).exists()
         return Response(data)
         
 class DeleteView(APIView):

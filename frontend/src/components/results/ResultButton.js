@@ -4,8 +4,6 @@ import { useDispatch } from 'react-redux';
 import { saveMovie } from '../../app/movieSlice';
 import { deleteMovie } from '../../app/movieSlice';
 
-import { Button } from '@mui/material';
-
 import IconButton from '@mui/material/IconButton';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';

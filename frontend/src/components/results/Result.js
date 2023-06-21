@@ -9,10 +9,7 @@ import React, { useState } from 'react';
 import MovieModal from '../../modal/MovieModal';
 import ResultButton from './ResultButton';
 
-import { Card, CardActions, CardMedia, CardContent, Typography, Button } from '@mui/material';
-
-import SaveIcon from '@mui/icons-material/Save';
-
+import { Card, CardActions, CardMedia, CardContent, Typography } from '@mui/material';
 
 // Use a question mark as a placeholder image for movies that have no poster.
 const noPosterImg = "https://upload.wikimedia.org/wikipedia/commons/2/28/Question_mark_white.png";

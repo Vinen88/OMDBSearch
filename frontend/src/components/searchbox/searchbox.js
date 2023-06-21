@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 
 import { fetchMovies } from '../../app/movieSlice';
 
-import { Container, Typography, Grid, Button, TextField, createTheme, GlobalStyles } from '@mui/material';
+import { Container, Typography, Grid, Button, TextField } from '@mui/material';
 
 import ToggleButton from '../ToggleButton/ToggleButton';
 
