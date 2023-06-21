@@ -56,7 +56,7 @@ class DetailedMovieView(APIView):
     #probably needs more error checking
     #view for getting detailed movie info for modal/popup when clicking poster
     def get(self, request, *args, **kwargs):
-        imdbID = request.data['imdbID']
+        imdbID = request.query_params.get('imdbID')
         url = "http://www.omdbapi.com/?i=" + imdbID + "&apikey="+OMDB_API_KEY
         api_call = requests.get(url)
         data = api_call.json()

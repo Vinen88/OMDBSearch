@@ -4,7 +4,7 @@
  * 
  * Each movie result is a Material-UI Card.
  */
-import React from 'react';
+import React, { useState } from 'react';
 
 import MovieModal from '../../modal/MovieModal';
 import ResultButton from './ResultButton';
@@ -22,33 +22,38 @@ const noPosterImg = "https://upload.wikimedia.org/wikipedia/commons/2/28/Questio
 
 
 function Result(props) {
-
-  return (
-    <Card style={{ backgroundColor: "#9f94a0" }}>
-      <CardMedia
-        sx={{ height: 550, backgroundColor: "#9f94a0" }}
-        component="img"
-        alt="Movie Poster"
-        image={
-          // If there is a poster image URL provided (not 'N/A'), use it.
-          // Otherwise, use the placeholder image.
-          props.data['Poster'] !== 'N/A' ? props.data['Poster'] : noPosterImg
-        }
-        title="Movie Poster"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h6" component="h6" color="#603840" noWrap>
-          {props.data['Title']}
-        </Typography>
-        <Typography variant="body1" color="#603840" component="p">
-          {props.data['Year']}
-        </Typography>
-      </CardContent>
-      <CardActions style={{ justifyContent: 'right' }}>
-        <ResultButton data={props.data} />
-      </CardActions>
-    </Card>
-  );
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true); //hit the api to get the movie details
+    const handleClose = () => setOpen(false); //close the modal
+    return (
+        <Card style={{ backgroundColor: "#9f94a0" }}>
+            <CardMedia
+                sx={{ height: 550, backgroundColor: "#9f94a0" }}
+                component="img"
+                className="open-modal"
+                onClick={ handleOpen }
+                alt="Movie Poster"
+                image={
+                    // If there is a poster image URL provided (not 'N/A'), use it.
+                    // Otherwise, use the placeholder image.
+                    props.data['Poster'] !== 'N/A' ? props.data['Poster'] : noPosterImg
+                }
+                title="Movie Poster"
+            />
+            <CardContent>
+                { open && <MovieModal open={open} handleClose={ handleClose } data={props.data} />}
+                <Typography gutterBottom variant="h6" component="h6" color="#603840" noWrap>
+                    {props.data['Title']}
+                </Typography>
+                <Typography variant="body1" color="#603840" component="p">
+                    {props.data['Year']}
+                </Typography>
+            </CardContent>
+            <CardActions style={{ justifyContent: 'right' }}>
+                <ResultButton data={props.data} />
+            </CardActions>
+        </Card>
+    );
 }
 
 export default Result;

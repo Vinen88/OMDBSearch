@@ -6,6 +6,7 @@ import { deleteMovie } from '../../app/movieSlice';
 
 import { Button } from '@mui/material';
 
+import IconButton from '@mui/material/IconButton';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -23,7 +24,7 @@ function ResultButton(props) {
 
     if (saved) {
         return (
-            <Button
+            <IconButton
                 variant="outlined"
                 size="small"
                 color="error"
@@ -33,13 +34,12 @@ function ResultButton(props) {
                     dispatch(deleteMovie(props.data['imdbID']));
                 }}
             >
-                Delete
-            </Button>
+                <DeleteIcon />
+            </IconButton>
         );
     }
     return (
-        <Button
-            variant="outlined"
+        <IconButton
             size="small"
             startIcon={<SaveIcon />}
             color="success"
@@ -48,8 +48,8 @@ function ResultButton(props) {
                 handleSaveClick(e, props.data['imdbID']);
             }}
         >
-            Save
-        </Button>
+            <SaveIcon />
+        </IconButton>
     );
 }
 

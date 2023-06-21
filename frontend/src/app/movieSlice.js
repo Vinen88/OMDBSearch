@@ -9,6 +9,7 @@ export const moviesSlice = createSlice({
     name: 'movies',
     initialState: {
       results: [],
+      detailed: {},
     },
     reducers: {
       /**
@@ -16,6 +17,10 @@ export const moviesSlice = createSlice({
        */
       setResults: (state, action) => { 
         state.results = action.payload;
+      },
+
+      setDetailed: (state, action) => {
+        state.detailed = action.payload;
       },
   
       /**
@@ -105,11 +110,29 @@ export const deleteMovie = movie => dispatch => {
   })
 };
 
+export const fetchmoviedetails = movie => dispatch => {
+  axios.get(databaseurl + "/detailedmovie/", {
+    params: {
+      'imdbID': movie,
+    },
+  },
+  ).then(response => {
+    if (response.data) {
+      console.log(response.data);
+      dispatch(setDetailed(response.data));
+    } else {
+      console.log("Error loading movie details");
+    }
+  }).catch(err => { alert(err); })
+}; 
+
 // Export the non-asynchronous reducer actions: setResults and removeResult
-export const { setResults, removeResult, shouldReload } = moviesSlice.actions;
+export const { setResults, removeResult, setDetailed } = moviesSlice.actions;
 
 // Export the movie results selector
 export const selectMovies = state => state.movies.results;
+
+export const selectDetailed = state => state.movies.detailed;
 
 // Export the movies reducer
 export default moviesSlice.reducer;
