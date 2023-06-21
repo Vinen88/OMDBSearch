@@ -45,7 +45,7 @@ function MovieModal({ open, handleClose, data }) {
             >
                 <Card 
                 sx={{ 
-                    width: '400px',
+                    width: '450px',
                     maxWidth: "90%", 
                     position: 'absolute', 
                     top: '50%', 
@@ -106,7 +106,7 @@ function MovieModal({ open, handleClose, data }) {
                         <Rating name="IMDB Rating" value={Number(detailedMovieResult['imdbRating']) / 2} precision={0.5} readOnly />
                     </CardContent>
                     <CardActions style={{ justifyContent: 'right' }}>
-                        <ResultButton data={detailedMovieResult} />
+                        <ResultButton data={detailedMovieResult} close={handleClose}/>
                     </CardActions>
                 </Card>
             </Modal>

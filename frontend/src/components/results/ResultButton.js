@@ -30,6 +30,7 @@ function ResultButton(props) {
                 color="error"
                 startIcon={<DeleteIcon />}
                 onClick={(e) => {
+                    props.close();
                     setSaved(false);
                     dispatch(deleteMovie(props.data['imdbID']));
                 }}
