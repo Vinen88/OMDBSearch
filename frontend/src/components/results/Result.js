@@ -8,7 +8,8 @@ import React, { useState } from 'react';
 
 import MovieModal from '../../modal/MovieModal';
 import ResultButton from './ResultButton';
-
+import { useDispatch } from 'react-redux';
+import { setDetailedDefault } from '../../app/movieSlice';
 import { Card, CardActions, CardMedia, CardContent, Typography } from '@mui/material';
 
 // Use a question mark as a placeholder image for movies that have no poster.
@@ -19,13 +20,17 @@ const noPosterImg = "https://upload.wikimedia.org/wikipedia/commons/2/28/Questio
 
 
 function Result(props) {
+    const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true); //hit the api to get the movie details
-    const handleClose = () => setOpen(false); //close the modal
+    const handleClose = () => {
+        dispatch(setDetailedDefault());
+        setOpen(false);
+    } //close the modal
     return (
         <Card style={{ backgroundColor: "#9f94a0" }}>
             <CardMedia
-                sx={{ height: 550, backgroundColor: "#9f94a0" }}
+                sx={{ height: 550, backgroundColor: "#9f94a0", cursor: "pointer", "&:hover": { opacity: 0.5 } }}
                 component="img"
                 className="open-modal"
                 onClick={ handleOpen }
@@ -47,7 +52,7 @@ function Result(props) {
                 </Typography>
             </CardContent>
             <CardActions style={{ justifyContent: 'right' }}>
-                <ResultButton data={props.data} />
+                <ResultButton data={props.data} close={handleClose}/>
             </CardActions>
         </Card>
     );

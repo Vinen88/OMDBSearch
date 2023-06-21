@@ -4,7 +4,7 @@ import Modal from '@mui/material/Modal';
 import { useDispatch } from 'react-redux';
 import { fetchmoviedetails } from "../app/movieSlice";
 import { useSelector } from 'react-redux';
-import { selectDetailed } from '../app/movieSlice';
+import { selectDetailed, setDetailedDefault } from '../app/movieSlice';
 import Rating from '@mui/material/Rating';
 import { CardContent, Card, CardMedia, CardActions } from "@mui/material";
 import ResultButton from "../components/results/ResultButton";
@@ -16,6 +16,7 @@ const noPosterImg = "https://upload.wikimedia.org/wikipedia/commons/2/28/Questio
 function MovieModal({ open, handleClose, data }) {
     const dispatch = useDispatch();
     useEffect(() => {
+        setDetailedDefault();
         dispatch(fetchmoviedetails(data['imdbID']));
     }, [data['imdbID']]);
     const detailedMovieResult = useSelector(selectDetailed); // maybe move into useEffect

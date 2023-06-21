@@ -10,6 +10,7 @@ export const moviesSlice = createSlice({
     initialState: {
       results: [],
       detailed: {},
+      searched: false,
     },
     reducers: {
       /**
@@ -22,6 +23,10 @@ export const moviesSlice = createSlice({
       setDetailed: (state, action) => {
         state.detailed = action.payload;
       },
+
+      setDetailedDefault: (state) => {
+        state.detailed = {};
+      },
   
       /**
        * Removes the movie from the results state array located at the
@@ -31,6 +36,9 @@ export const moviesSlice = createSlice({
         //state.results.splice(action.payload, 1);
         // remove the movie from state.results that matches the provided imdbID
         state.results = state.results.filter(movie => movie.imdbID !== action.payload);
+      },
+      setSearched: (state, action) => {
+        state.searched = action.payload;
       },
     },
   });
@@ -43,6 +51,8 @@ export const moviesSlice = createSlice({
 export const fetchMovies = query => dispatch => {
 
     // Perform a GET request on the API for movies matching the query.
+    dispatch(setSearched(true));
+
     if (query === undefined || query === "") {
       dispatch(setResults([]));
       return;
@@ -60,10 +70,12 @@ export const fetchMovies = query => dispatch => {
       if (response.data['Response'] === 'True') {
         dispatch(setResults(response.data['Search']));
       } else {
-        alert(response.data['Error']);
+        console.log(response.data['Error']);
+        dispatch(setResults([]));
       }
     }).catch(err => {
-      alert(err);
+      console.log(err);
+      dispatch(setResults([]));
     })
 };
 
@@ -110,6 +122,7 @@ export const deleteMovie = movie => dispatch => {
   })
 };
 
+
 export const fetchmoviedetails = movie => dispatch => {
   axios.get(databaseurl + "/detailedmovie/", {
     params: {
@@ -127,12 +140,14 @@ export const fetchmoviedetails = movie => dispatch => {
 }; 
 
 // Export the non-asynchronous reducer actions: setResults and removeResult
-export const { setResults, removeResult, setDetailed } = moviesSlice.actions;
+export const { setResults, removeResult, setDetailed, setDetailedDefault, setSearched } = moviesSlice.actions;
 
 // Export the movie results selector
 export const selectMovies = state => state.movies.results;
 
 export const selectDetailed = state => state.movies.detailed;
+
+export const selectSearched = state => state.movies.searched;
 
 // Export the movies reducer
 export default moviesSlice.reducer;

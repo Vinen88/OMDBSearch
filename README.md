@@ -25,6 +25,14 @@ in the backend directory
 You need an OMDB API key which you can get from [https://www.omdbapi.com/apikey.aspx](https://www.omdbapi.com/apikey.aspx)
 once you have your OMDBAPI key you need to put it in an .env file within the backend directory. You can use the provided .envexample file and rename it to .env after you are done.
 
+### Create your environment
+
+create a venv see [https://docs.python.org/3/library/venv.html](https://docs.python.org/3/library/venv.html) for more details
+
+### `python -m pip install -r requirements.txt`
+
+installs required libraries for it to run.
+
 ### `./manage.py migrate`
 
 you first need to build your sqlite database so run this command from the backend directory. the manage.py file should be within your current directory.
