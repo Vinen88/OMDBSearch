@@ -6,8 +6,8 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { fetchMovies, fetchSavedMovies } from '../../app/movieSlice';
 import SearchIcon from '@mui/icons-material/Search';
 import SaveIcon from '@mui/icons-material/Save';
-import { Typography } from '@mui/material';
 
+import styles from './ToggleButton.module.css';
 
 
 export default function ToggleButtons(props) {
@@ -22,20 +22,23 @@ export default function ToggleButtons(props) {
         }
     };
     return( 
-        <ToggleButtonGroup
-         color="primary"
-         value={resultsListType}
-         exclusive
-         onChange={handleChange}
-         >
-            <ToggleButton value="search" aria-label="search">
-                <SearchIcon />
-                Search
-            </ToggleButton>
-            <ToggleButton value="saved" aria-label="saved">
-                <SaveIcon />
-                Saved Movies
-            </ToggleButton>
-         </ToggleButtonGroup>
+        <div className={styles.container}>
+            <ToggleButtonGroup
+            color="primary"
+            value={resultsListType}
+            style={{backgroundColor: '#bd8990', color: '#603840', boarderColor: '#603840'}}
+            exclusive
+            onChange={handleChange}
+            >
+                <ToggleButton value="search" aria-label="search" style={{color:"#603840"}}>
+                    <SearchIcon />
+                    Search
+                </ToggleButton>
+                <ToggleButton value="saved" aria-label="saved" style={{color:"#603840"}}>
+                    <SaveIcon />
+                    Saved Movies
+                </ToggleButton>
+            </ToggleButtonGroup>
+         </div>
     );
 }

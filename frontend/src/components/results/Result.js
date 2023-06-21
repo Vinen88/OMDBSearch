@@ -34,9 +34,9 @@ function Result(props) {
   const dispatch = useDispatch();
   
   return (
-    <Card>
+    <Card style={{backgroundColor:"#bd8990"}}>
       <CardMedia
-        sx={{ height: 500 }}
+        sx={{ height: 550 }}
         component="img"
         alt="Movie Poster"
         image={
@@ -47,10 +47,10 @@ function Result(props) {
         title="Movie Poster"
       />
       <CardContent>
-        <Typography gutterBottom variant="h6" component="h6" noWrap>
+        <Typography gutterBottom variant="h6" component="h6" color="#603840" noWrap>
           {props.data['Title']}
         </Typography>
-        <Typography variant="body1" color="textPrimary" component="p">
+        <Typography variant="body1" color="#603840" component="p">
           {props.data['Year']}
         </Typography>
       </CardContent>

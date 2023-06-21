@@ -29,11 +29,11 @@ export default function SearchBox() {
       <div className={styles.containerParent}>
         <Container className={styles.container} maxWidth="md">
 
-          <Typography variant="h3" align="center" color="textPrimary" gutterBottom>
+          <Typography variant="h3" align="center" style={{ color: '#603840' }}color="textPrimary" gutterBottom>
             OMDb Search
           </Typography>
 
-          <Typography variant="h6" align="center" color="textSecondary" paragraph>
+          <Typography variant="h6" align="center" style={{ color: '#603840' }} paragraph>
             Search for a movie title using the box below. Results from the OMDb
             will be returned.
           </Typography>
@@ -41,7 +41,10 @@ export default function SearchBox() {
           <Grid container spacing={2} justifyContent="center">
             <Grid item>
               <TextField
+                label="Search for a movie title"
+                fontcolor="#603840"
                 value={query}
+                style={{backgroundColor: '#bd8990', color: '#603840', boarderColor: '#603840'}}
                 onChange={e => setQuery(e.target.value)}
                 onKeyDown={(e) => {
                   // For convenience, if the user presses the Enter key inside the search box,
@@ -50,6 +53,7 @@ export default function SearchBox() {
                     dispatch(fetchMovies(query));  
                   }
                 }}
+                color="secondary"
                 variant="outlined"
                 size="small"
               />
@@ -57,7 +61,7 @@ export default function SearchBox() {
             <Grid item>
               <Button
                 variant="contained"
-                style={{backgroundColor: blue, color: 'white'}}
+                style={{backgroundColor: '#bd8990', color: '#603840'}}
                 startIcon={<SearchIcon />}
                 onClick={() => dispatch(fetchMovies(query))}
               >
