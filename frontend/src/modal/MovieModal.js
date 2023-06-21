@@ -43,9 +43,16 @@ function MovieModal({ open, handleClose, data }) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                {/* { open && <MovieModal open={open} handleClose={ handleClose } data={props.data} />} */}
                 <Card 
-                sx={{ maxWidth: 365, position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+                sx={{ 
+                    width: '400px',
+                    maxWidth: "90%", 
+                    position: 'absolute', 
+                    top: '50%', 
+                    left: '50%', 
+                    transform: 'translate(-50%, -50%)',
+                    maxHeight: "95%",
+                    overflow: "auto", }}
                 variant="outlined"
                 >
                     <CardMedia
@@ -102,22 +109,6 @@ function MovieModal({ open, handleClose, data }) {
                         <ResultButton data={detailedMovieResult} />
                     </CardActions>
                 </Card>
-                {/* display data from detailedMovieResult in a pretty way within the modal */}
-
-                {/* <Box sx={style}>
-                    <div id="block">
-                        <img src={detailedMovieResult['Poster'] !== 'N/A' ? detailedMovieResult['Poster'] : noPosterImg} alt="Movie Poster" />
-                        
-                        <Typography id="modal-modal-title" variant="h6" component="h2">
-                            {detailedMovieResult['Title'] + " (" + detailedMovieResult['Year'] + ")"}
-                        </Typography>
-                        <Typography component="legend">IMDB Rating</Typography>
-                        <Rating name="IMDB Rating" value={ Number(detailedMovieResult['imdbRating'])/2 } precision={0.5} readOnly />
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            DIS MODAL
-                        </Typography>
-                    </div>
-                </Box> */}
             </Modal>
         </div>
     );
