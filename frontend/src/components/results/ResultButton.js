@@ -9,24 +9,24 @@ import { Button } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-function ResultButton(props){
+function ResultButton(props) {
     const dispatch = useDispatch();
     const [saved, setSaved] = useState(props.data['saved']);
     const handleSaveClick = (event, imdbID) => {
         setSaved(true);
-        dispatch(saveMovie(imdbID));   
+        dispatch(saveMovie(imdbID));
     };
-    
+
     useEffect(() => {
         setSaved(props.data['saved']);
-    },[props.data['imdbID']]);
+    }, [props.data['imdbID']]);
 
-    if (saved){
+    if (saved) {
         return (
             <Button
                 variant="outlined"
                 size="small"
-                color = "error"
+                color="error"
                 startIcon={<DeleteIcon />}
                 onClick={(e) => {
                     setSaved(false);
@@ -39,14 +39,14 @@ function ResultButton(props){
     }
     return (
         <Button
-          variant="outlined"
-          size="small"
-          startIcon={<SaveIcon />}
-          color = "success"
-          disabled={ saved }
-          onClick={(e) => {
-            handleSaveClick(e, props.data['imdbID']);
-          }} 
+            variant="outlined"
+            size="small"
+            startIcon={<SaveIcon />}
+            color="success"
+            disabled={saved}
+            onClick={(e) => {
+                handleSaveClick(e, props.data['imdbID']);
+            }}
         >
             Save
         </Button>

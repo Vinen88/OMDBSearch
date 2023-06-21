@@ -21,24 +21,24 @@ export default function ToggleButtons(props) {
             dispatch(fetchSavedMovies());
         }
     };
-    return( 
+    return (
         <div className={styles.container}>
             <ToggleButtonGroup
-            color="primary"
-            value={resultsListType}
-            style={{backgroundColor: '#bd8990', color: '#603840', boarderColor: '#603840'}}
-            exclusive
-            onChange={handleChange}
+                color="primary"
+                value={resultsListType}
+                style={{ backgroundColor: '#bd8990', color: '#603840', boarderColor: '#603840' }}
+                exclusive
+                onChange={handleChange}
             >
-                <ToggleButton value="search" aria-label="search" style={{color:"#603840"}}>
+                <ToggleButton value="search" aria-label="search" style={{ color: "#603840" }}>
                     <SearchIcon />
                     Search
                 </ToggleButton>
-                <ToggleButton value="saved" aria-label="saved" style={{color:"#603840"}}>
+                <ToggleButton value="saved" aria-label="saved" style={{ color: "#603840" }}>
                     <SaveIcon />
                     Saved Movies
                 </ToggleButton>
             </ToggleButtonGroup>
-         </div>
+        </div>
     );
 }

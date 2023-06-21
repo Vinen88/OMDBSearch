@@ -30,7 +30,7 @@ export default function ResultsGrid() {
             Pass down the index that the movie is located at in the results
             array (used for the remove feature), as well as the movie's
             data (title, year, poster URL) */}
-            
+
         <Grid container spacing={4}>
           {movieResults.map((movie, index) => (
             <Grid item key={index} xs={12} sm={6} md={4}>
@@ -38,7 +38,7 @@ export default function ResultsGrid() {
             </Grid>
           ))}
         </Grid>
-            
+
       </Container>
     </React.Fragment>
   );

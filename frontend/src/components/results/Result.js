@@ -6,9 +6,7 @@
  */
 import React from 'react';
 
-import { useDispatch } from 'react-redux';
-import { saveMovie } from '../../app/movieSlice';
-import { deleteMovie } from '../../app/movieSlice';
+import MovieModal from '../../modal/MovieModal';
 import ResultButton from './ResultButton';
 
 import { Card, CardActions, CardMedia, CardContent, Typography, Button } from '@mui/material';
@@ -24,11 +22,11 @@ const noPosterImg = "https://upload.wikimedia.org/wikipedia/commons/2/28/Questio
 
 
 function Result(props) {
-  
+
   return (
-    <Card style={{backgroundColor:"#9f94a0"}}>
+    <Card style={{ backgroundColor: "#9f94a0" }}>
       <CardMedia
-        sx={{ height: 550 }}
+        sx={{ height: 550, backgroundColor: "#9f94a0" }}
         component="img"
         alt="Movie Poster"
         image={
@@ -46,7 +44,7 @@ function Result(props) {
           {props.data['Year']}
         </Typography>
       </CardContent>
-      <CardActions style={{justifyContent: 'right'}}>
+      <CardActions style={{ justifyContent: 'right' }}>
         <ResultButton data={props.data} />
       </CardActions>
     </Card>

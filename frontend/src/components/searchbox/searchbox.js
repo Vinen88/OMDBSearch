@@ -23,7 +23,7 @@ import styles from './SearchBox.module.css';
 export default function SearchBox() {
   const [query, setQuery] = useState(''); // Contains the query typed in the search field
   const dispatch = useDispatch();
-  
+
   return (
     <React.Fragment>
       <div className={styles.containerParent}>
@@ -44,13 +44,13 @@ export default function SearchBox() {
                 placeholder="Search for a movie"
                 fontcolor="#603840"
                 value={query}
-                style={{backgroundColor: 'white', color: '#603840', boarderColor: '#9f94a0'}}
+                style={{ backgroundColor: 'white', color: '#603840', boarderColor: '#9f94a0' }}
                 onChange={e => setQuery(e.target.value)}
                 onKeyDown={(e) => {
                   // For convenience, if the user presses the Enter key inside the search box,
                   // fetch the movie results.
-                  if(e.key === 'Enter') {
-                    dispatch(fetchMovies(query));  
+                  if (e.key === 'Enter') {
+                    dispatch(fetchMovies(query));
                   }
                 }}
                 color="secondary"
@@ -61,7 +61,7 @@ export default function SearchBox() {
             <Grid item>
               <Button
                 variant="contained"
-                style={{backgroundColor: '#bd8990', color: '#603840'}}
+                style={{ backgroundColor: '#bd8990', color: '#603840' }}
                 startIcon={<SearchIcon />}
                 onClick={() => dispatch(fetchMovies(query))}
               >
@@ -69,7 +69,7 @@ export default function SearchBox() {
               </Button>
             </Grid>
           </Grid>
-          <ToggleButton data={query} />    
+          <ToggleButton data={query} />
         </Container>
       </div>
     </React.Fragment>
