@@ -14,12 +14,13 @@ function ResultButton(props){
     const [saved, setSaved] = useState(props.data['saved']);
     const handleSaveClick = (event, imdbID) => {
         setSaved(true);
-        dispatch(saveMovie(imdbID));
-        
+        dispatch(saveMovie(imdbID));   
     };
+    
     useEffect(() => {
         setSaved(props.data['saved']);
     },[props.data['imdbID']]);
+
     if (saved){
         return (
             <Button

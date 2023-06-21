@@ -23,13 +23,13 @@ import styles from './SearchBox.module.css';
 export default function SearchBox() {
   const [query, setQuery] = useState(''); // Contains the query typed in the search field
   const dispatch = useDispatch();
-  const blue = '#2196f3';
+  
   return (
     <React.Fragment>
       <div className={styles.containerParent}>
         <Container className={styles.container} maxWidth="md">
 
-          <Typography variant="h3" align="center" style={{ color: '#603840' }}color="textPrimary" gutterBottom>
+          <Typography variant="h3" align="center" style={{ color: '#603840' }} color="textPrimary" gutterBottom>
             OMDb Search
           </Typography>
 
@@ -41,10 +41,10 @@ export default function SearchBox() {
           <Grid container spacing={2} justifyContent="center">
             <Grid item>
               <TextField
-                label="Search for a movie title"
+                placeholder="Search for a movie"
                 fontcolor="#603840"
                 value={query}
-                style={{backgroundColor: '#bd8990', color: '#603840', boarderColor: '#603840'}}
+                style={{backgroundColor: 'white', color: '#603840', boarderColor: '#9f94a0'}}
                 onChange={e => setQuery(e.target.value)}
                 onKeyDown={(e) => {
                   // For convenience, if the user presses the Enter key inside the search box,

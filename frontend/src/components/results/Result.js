@@ -23,18 +23,10 @@ const noPosterImg = "https://upload.wikimedia.org/wikipedia/commons/2/28/Questio
 // images larger than the default.
 
 
-const handleClick = (event) => {
-  event.currentTarget.disabled = true;
-  event.currentTarget.innerText = "Saved";
-  event.currentTarget.style.backgroundColor = "#4caf50";
-};
-
 function Result(props) {
-
-  const dispatch = useDispatch();
   
   return (
-    <Card style={{backgroundColor:"#bd8990"}}>
+    <Card style={{backgroundColor:"#9f94a0"}}>
       <CardMedia
         sx={{ height: 550 }}
         component="img"

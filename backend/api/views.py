@@ -44,21 +44,26 @@ class SaveView(APIView):
                 print(serializer.errors)
                 return Response({'Response': "false"})
     
-    def get(self, request, *args, **kwargs):
-        imdbID = request.data['imdbID']
-        if SavedResult.objects.filter(imdbID=imdbID).exists():
-            data = SavedResult.objects.get(imdbID=imdbID)
-            serialized = SavedSerializer(data)
-            return Response(serialized.data)
-        else:
-            return Response({'Response': "false"})
 
 class MoviesView(APIView):
+    #gets all the movies saved to the database
     def get(self, request, *args, **kwargs):
         movies = SavedResult.objects.all()
         serialized = SavedSerializer(movies, many=True)
         return Response(serialized.data)
 
+class DetailedMovieView(APIView):
+    #probably needs more error checking
+    #view for getting detailed movie info for modal/popup when clicking poster
+    def get(self, request, *args, **kwargs):
+        imdbID = request.data['imdbID']
+        url = "http://www.omdbapi.com/?i=" + imdbID + "&apikey="+OMDB_API_KEY
+        api_call = requests.get(url)
+        data = api_call.json()
+        if data['Response'] == "True":
+            data['saved'] = SavedResult.objects.filter(imdbID=imdbID).exists()
+        return Response(data)
+        
 class DeleteView(APIView):
     def post(self, request, *args, **kwargs):
         imdbID = request.data['imdbID']
