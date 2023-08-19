@@ -11,7 +11,8 @@ from django.db import models
 #     saved = models.BooleanField(default=False)
 #     def __str__(self) -> str:
 #         return self.title
-    
+
+
 class SavedResult(models.Model):
     Title = models.CharField(max_length=100)
     Year = models.CharField(max_length=10)
@@ -38,7 +39,6 @@ class SavedResult(models.Model):
     Production = models.CharField(max_length=100, blank=True)
     Website = models.CharField(max_length=100, blank=True)
     saved = models.BooleanField(default=True)
-    Response = models.CharField(max_length=10) #idk why its documented as wanted saving this is kinda silly
-    
+
     def __str__(self) -> str:
         return self.Title
