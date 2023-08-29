@@ -39,6 +39,9 @@ class SavedResult(models.Model):
     Production = models.CharField(max_length=100, blank=True)
     Website = models.CharField(max_length=100, blank=True)
     saved = models.BooleanField(default=True)
+    dddid = models.CharField(max_length=40, blank=True)
+    dddURL = models.CharField(max_length=150, blank=True)
+    dddWarnings = models.JSONField(blank=True)
 
     def __str__(self) -> str:
         return self.Title
