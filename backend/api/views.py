@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from dotenv import load_dotenv
 from .models import SavedResult
 from .serializers import SavedSerializer
-from .utils.ddd import get_ddd
+from .utils.ddd import get_ddd, search_ddd
 import os
 import requests
 
@@ -62,8 +62,6 @@ class DetailedMovieView(APIView):
     # view for getting detailed movie info for modal/popup when clicking poster
     def get(self, request, *args, **kwargs):
         imdbID = request.query_params.get("imdbID")
-        title = request.query_params.get("title")
-        data = get_ddd(title)
         if SavedResult.objects.filter(imdbID=imdbID).exists():
             movie = SavedResult.objects.get(imdbID=imdbID)
             serializer = SavedSerializer(movie)
@@ -71,6 +69,8 @@ class DetailedMovieView(APIView):
         url = "http://www.omdbapi.com/?i=" + imdbID + "&apikey=" + OMDB_API_KEY
         api_call = requests.get(url)
         data = api_call.json()
+        dddid = search_ddd(data["Title"], data["Year"])
+        ddd_data = get_ddd(dddid)
         return Response(data)
 
 
