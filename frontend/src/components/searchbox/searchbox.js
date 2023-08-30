@@ -62,7 +62,7 @@ export default function SearchBox() {
               <Button
                 variant="contained"
                 style={{ backgroundColor: '#bd8990', color: '#603840' }}
-                startIcon={<SearchIcon />}
+                starticon={<SearchIcon />}
                 onClick={() => dispatch(fetchMovies(query))}
               >
                 Submit

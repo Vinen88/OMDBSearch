@@ -48,8 +48,9 @@ class SaveView(APIView):
         if data["Response"] == "True":
             dddid = search_ddd(data["Title"], data["Year"])
             data["dddWarnings"] = get_ddd(dddid)
-            data["ddd_URL"] = f"https://www.doesthedogdie.com/media/{dddid}"
+            data["dddURL"] = f"https://www.doesthedogdie.com/media/{dddid}"
             data["dddid"] = dddid
+            data["saved"] = True
             serializer = SavedSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
@@ -85,7 +86,7 @@ class DetailedMovieView(APIView):
         data = api_call.json()
         dddid = search_ddd(data["Title"], data["Year"])
         data["dddWarnings"] = get_ddd(dddid)
-        data["ddd_URL"] = f"https://www.doesthedogdie.com/media/{dddid}"
+        data["dddURL"] = f"https://www.doesthedogdie.com/media/{dddid}"
         data["dddid"] = dddid
         print(data)
         serializer = SavedSerializer(data=data)

@@ -68,7 +68,6 @@ function MovieModal({ open, handleClose, data }) {
                         height="500"
                         image={detailedMovieResult['Poster'] !== 'N/A' ? detailedMovieResult['Poster'] : noPosterImg}
                     />
-                    {console.log(detailedMovieResult)}
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
                             {detailedMovieResult['Title'] + " (" + detailedMovieResult['Year'] + ")"}
@@ -135,6 +134,11 @@ function MovieModal({ open, handleClose, data }) {
                                     <b> CONTENT WARNINGS </b>
                                     <WarningRoundedIcon color="error" />
                                 </Typography>
+                                {typeof (detailedMovieResult['dddURL']) !== 'undefined' &&
+                                    <Typography variant="body2" color="text.secondary">
+                                        <a href={detailedMovieResult['dddURL']} target="_blank" rel="noreferrer">Click here for more information.</a>
+                                    </Typography>
+                                }
                                 <List>
                                     {(typeof (detailedMovieResult['dddWarnings']) !== 'undefined' && detailedMovieResult['dddWarnings'].length !== 0) &&
                                         detailedMovieResult['dddWarnings'].map((warning, index) => (

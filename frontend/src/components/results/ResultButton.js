@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { saveMovie } from '../../app/movieSlice';
@@ -16,17 +16,13 @@ function ResultButton(props) {
         dispatch(saveMovie(imdbID));
     };
 
-    useEffect(() => {
-        setSaved(props.data['saved']);
-    }, [props.data['imdbID']]);
-
     if (saved) {
         return (
             <IconButton
                 variant="outlined"
                 size="small"
                 color="error"
-                startIcon={<DeleteIcon />}
+                starticon={<DeleteIcon />}
                 onClick={(e) => {
                     props.close()
                     setSaved(false);
@@ -40,7 +36,7 @@ function ResultButton(props) {
     return (
         <IconButton
             size="small"
-            startIcon={<SaveIcon />}
+            starticon={<SaveIcon />}
             color="success"
             disabled={saved}
             onClick={(e) => {

@@ -32,7 +32,7 @@ export default function ResultsGrid() {
             array (used for the remove feature), as well as the movie's
             data (title, year, poster URL) */}
         {/* If there are no results, display a message instead of the grid */}
-        {(movieResults.length === 0 && searched === true )&& 
+        {(movieResults.length === 0 && searched === true) &&
           <Typography gutterBottom variant="h3" component="h3" color="#603840">No results found.</Typography>
         }
         <Grid container spacing={4}>
