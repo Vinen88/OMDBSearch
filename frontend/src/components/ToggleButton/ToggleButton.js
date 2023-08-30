@@ -17,7 +17,7 @@ export default function ToggleButtons(props) {
         setResultsListType(newResultsListType);
         if (newResultsListType === 'search') {
             dispatch(fetchMovies(props.data));
-        } else {
+        } else if (newResultsListType === 'saved') {
             dispatch(fetchSavedMovies());
         }
     };
