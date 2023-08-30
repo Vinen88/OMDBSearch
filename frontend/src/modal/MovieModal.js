@@ -8,19 +8,38 @@ import { selectDetailed, setDetailedDefault } from '../app/movieSlice';
 import Rating from '@mui/material/Rating';
 import { CardContent, Card, CardMedia, CardActions } from "@mui/material";
 import ResultButton from "../components/results/ResultButton";
+import { styled } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Collapse from '@mui/material/Collapse';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
 const noPosterImg = "https://upload.wikimedia.org/wikipedia/commons/2/28/Question_mark_white.png";
 
+const ExpandMore = styled((props) => {
+    const { expand, ...other } = props;
+    return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest,
+    }),
+}));
 
 
 function MovieModal({ open, handleClose, data }) {
     const dispatch = useDispatch();
+    const [expanded, setExpanded] = React.useState(false);
     useEffect(() => {
         setDetailedDefault();
         dispatch(fetchmoviedetails(data['imdbID']));
-    }, [data['imdbID']]);
+    }, [data, dispatch]);
     const detailedMovieResult = useSelector(selectDetailed); // maybe move into useEffect
-
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    };
     return (
         <div>
             <Modal
@@ -29,17 +48,18 @@ function MovieModal({ open, handleClose, data }) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Card 
-                sx={{ 
-                    width: '450px',
-                    maxWidth: "90%", 
-                    position: 'absolute', 
-                    top: '50%', 
-                    left: '50%', 
-                    transform: 'translate(-50%, -50%)',
-                    maxHeight: "95%",
-                    overflow: "auto", }}
-                variant="outlined"
+                <Card
+                    sx={{
+                        width: '450px',
+                        maxWidth: "90%",
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        maxHeight: "95%",
+                        overflow: "auto",
+                    }}
+                    variant="outlined"
                 >
                     <CardMedia
                         component="img"
@@ -47,6 +67,7 @@ function MovieModal({ open, handleClose, data }) {
                         height="500"
                         image={detailedMovieResult['Poster'] !== 'N/A' ? detailedMovieResult['Poster'] : noPosterImg}
                     />
+                    {console.log(detailedMovieResult)}
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
                             {detailedMovieResult['Title'] + " (" + detailedMovieResult['Year'] + ")"}
@@ -91,9 +112,37 @@ function MovieModal({ open, handleClose, data }) {
                         <Typography component="legend" variant="body2" color="text.secondary">IMDB Rating:</Typography>
                         <Rating name="IMDB Rating" value={Number(detailedMovieResult['imdbRating']) / 2} precision={0.5} readOnly />
                     </CardContent>
+
                     <CardActions style={{ justifyContent: 'right' }}>
-                        <ResultButton data={detailedMovieResult} close={handleClose}/>
+                        <ResultButton data={detailedMovieResult} close={handleClose} />
+                        {(typeof (detailedMovieResult['dddWarnings']) !== 'undefined' && detailedMovieResult['dddWarnings'].length !== 0) &&
+                            <ExpandMore
+                                expand={expanded}
+                                onClick={handleExpandClick}
+                                aria-expanded={expanded}
+                                aria-label="Content Warnings"
+                            >
+                                <ExpandMoreIcon />
+                            </ExpandMore>
+                        }
                     </CardActions>
+                    {(typeof (detailedMovieResult['dddWarnings']) !== 'undefined' && detailedMovieResult['dddWarnings'].length !== 0) &&
+                        <Collapse in={expanded} timeout="auto" unmountOnExit>
+                            <CardContent>
+                                <Typography>
+                                    <b>CONTENT WARNINGS:</b>
+                                </Typography>
+                                <List>
+                                    {detailedMovieResult['dddWarnings'].length !== 0 &&
+                                        <ListItem>
+                                            <Typography>
+                                                <b>DDD:</b> {detailedMovieResult['dddWarnings']}
+                                            </Typography>
+                                        </ListItem>}
+                                </List>
+                            </CardContent>
+                        </Collapse>
+                    }
                 </Card>
             </Modal>
         </div>

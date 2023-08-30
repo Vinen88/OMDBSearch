@@ -1,7 +1,8 @@
 from django.db import models
 
 # Create your models here.
-# dont think I need this because we arent saving search results. can just pass through, though might be easier to use model to serialize object and add saved but eh
+# dont think I need this because we arent saving search results. can just pass through,
+# though might be easier to use model to serialize object and add saved but eh
 # class SearchResult(models.Model):
 #     title = models.CharField(max_length=100)
 #     year = models.CharField(max_length=10)
@@ -38,7 +39,7 @@ class SavedResult(models.Model):
     BoxOffice = models.CharField(max_length=20, blank=True)
     Production = models.CharField(max_length=100, blank=True)
     Website = models.CharField(max_length=100, blank=True)
-    saved = models.BooleanField(default=True)
+    saved = models.BooleanField(default=False)
     dddid = models.CharField(max_length=40, blank=True)
     dddURL = models.CharField(max_length=150, blank=True)
     dddWarnings = models.JSONField(blank=True)

@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from .models import SavedResult
 from .serializers import SavedSerializer
 from .utils.ddd import get_ddd, search_ddd
+from django.db.utils import IntegrityError
 import os
 import requests
 
@@ -16,7 +17,7 @@ OMDB_API_KEY = os.getenv("OMDB_API_KEY")
 class SearchView(APIView):
     def get(self, request, *args, **kwargs):
         query = request.query_params.get("query")
-        url = 'http://www.omdbapi.com/?s="' + query + '"&apikey=' + OMDB_API_KEY + "&type=movie"  # type: ignore
+        url = f'http://www.omdbapi.com/?s="{query}"&apikey={OMDB_API_KEY}&type=movie'
         api_call = requests.get(url)
         data = api_call.json()
         print(data["totalResults"])
@@ -35,11 +36,20 @@ class SaveView(APIView):
     def post(self, request, *args, **kwargs):
         imdbID = request.data["imdbID"]
         if SavedResult.objects.filter(imdbID=imdbID).exists():
-            return Response({"Response": "false"})
-        url = "http://www.omdbapi.com/?i=" + imdbID + "&apikey=" + OMDB_API_KEY  # type: ignore
+            movie = SavedResult.objects.get(imdbID=imdbID)
+            if movie.saved:
+                return Response({"Response": "False"})
+            movie.saved = True
+            movie.save()
+            return Response({"Response": "True"})
+        url = f"http://www.omdbapi.com/?i={imdbID}&apikey={OMDB_API_KEY}"
         api_call = requests.get(url)  # serialize data and save to db
         data = api_call.json()
         if data["Response"] == "True":
+            dddid = search_ddd(data["Title"], data["Year"])
+            data["dddWarnings"] = get_ddd(dddid)
+            data["ddd_URL"] = f"https://www.doesthedogdie.com/media/{dddid}"
+            data["dddid"] = dddid
             serializer = SavedSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
@@ -54,7 +64,11 @@ class MoviesView(APIView):
     def get(self, request, *args, **kwargs):
         movies = SavedResult.objects.all()
         serialized = SavedSerializer(movies, many=True)
-        return Response(serialized.data)
+        data = []
+        for item in serialized.data:
+            if item["saved"]:
+                data.append(item)
+        return Response(data)
 
 
 class DetailedMovieView(APIView):
@@ -66,11 +80,21 @@ class DetailedMovieView(APIView):
             movie = SavedResult.objects.get(imdbID=imdbID)
             serializer = SavedSerializer(movie)
             return Response(serializer.data)
-        url = "http://www.omdbapi.com/?i=" + imdbID + "&apikey=" + OMDB_API_KEY
+        url = f"http://www.omdbapi.com/?i={imdbID}&apikey={OMDB_API_KEY}"
         api_call = requests.get(url)
         data = api_call.json()
         dddid = search_ddd(data["Title"], data["Year"])
-        ddd_data = get_ddd(dddid)
+        data["dddWarnings"] = get_ddd(dddid)
+        data["ddd_URL"] = f"https://www.doesthedogdie.com/media/{dddid}"
+        data["dddid"] = dddid
+        print(data)
+        serializer = SavedSerializer(data=data)
+        if serializer.is_valid():
+            try:
+                serializer.save()
+            except IntegrityError:
+                # I dont know why we are getting integrety errors here.
+                print(serializer.errors)
         return Response(data)
 
 
