@@ -20,7 +20,6 @@ class SearchView(APIView):
         url = f'http://www.omdbapi.com/?s="{query}"&apikey={OMDB_API_KEY}&type=movie'
         api_call = requests.get(url)
         data = api_call.json()
-        print(data["totalResults"])
         search_result = data["Search"]
         # check if data is already in database and add saved to json.
         for i in range(len(search_result)):
@@ -84,11 +83,12 @@ class DetailedMovieView(APIView):
         url = f"http://www.omdbapi.com/?i={imdbID}&apikey={OMDB_API_KEY}"
         api_call = requests.get(url)
         data = api_call.json()
+        if data["Response"] == "False":
+            return Response(data)
         dddid = search_ddd(data["Title"], data["Year"])
         data["dddWarnings"] = get_ddd(dddid)
         data["dddURL"] = f"https://www.doesthedogdie.com/media/{dddid}"
         data["dddid"] = dddid
-        print(data)
         serializer = SavedSerializer(data=data)
         if serializer.is_valid():
             try:

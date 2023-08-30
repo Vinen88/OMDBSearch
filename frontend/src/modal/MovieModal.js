@@ -69,6 +69,11 @@ function MovieModal({ open, handleClose, data }) {
                         image={detailedMovieResult['Poster'] !== 'N/A' ? detailedMovieResult['Poster'] : noPosterImg}
                     />
                     <CardContent>
+                        {detailedMovieResult["Response"] === "False" &&
+                            <Typography gutterBottom variant="h5" component="div">
+                                ERROR: {detailedMovieResult['Error']} Please check back later.
+                            </Typography>
+                        }
                         <Typography gutterBottom variant="h5" component="div">
                             {detailedMovieResult['Title'] + " (" + detailedMovieResult['Year'] + ")"}
                         </Typography>
