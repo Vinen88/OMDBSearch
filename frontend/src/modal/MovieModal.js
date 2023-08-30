@@ -115,7 +115,9 @@ function MovieModal({ open, handleClose, data }) {
 
                     <CardActions style={{ justifyContent: 'right' }}>
                         <ResultButton data={detailedMovieResult} close={handleClose} />
-                        {(typeof (detailedMovieResult['dddWarnings']) !== 'undefined' && detailedMovieResult['dddWarnings'].length !== 0) &&
+                        {(typeof (detailedMovieResult['dddWarnings']) !== 'undefined'
+                            && detailedMovieResult['dddWarnings'] !== null
+                            && detailedMovieResult['dddWarnings'].length !== 0) &&
                             <ExpandMore
                                 expand={expanded}
                                 onClick={handleExpandClick}
@@ -126,7 +128,9 @@ function MovieModal({ open, handleClose, data }) {
                             </ExpandMore>
                         }
                     </CardActions>
-                    {(typeof (detailedMovieResult['dddWarnings']) !== 'undefined' && detailedMovieResult['dddWarnings'].length !== 0) &&
+                    {(typeof (detailedMovieResult['dddWarnings']) !== 'undefined'
+                        && detailedMovieResult['dddWarnings'] !== null
+                        && detailedMovieResult['dddWarnings'].length !== 0) &&
                         <Collapse in={expanded} timeout="auto" unmountOnExit>
                             <CardContent>
                                 <Typography variant="body2" color="text.primary">
@@ -140,7 +144,9 @@ function MovieModal({ open, handleClose, data }) {
                                     </Typography>
                                 }
                                 <List>
-                                    {(typeof (detailedMovieResult['dddWarnings']) !== 'undefined' && detailedMovieResult['dddWarnings'].length !== 0) &&
+                                    {(typeof (detailedMovieResult['dddWarnings']) !== 'undefined'
+                                        && detailedMovieResult['dddWarnings'] !== null
+                                        && detailedMovieResult['dddWarnings'].length !== 0) &&
                                         detailedMovieResult['dddWarnings'].map((warning, index) => (
                                             <ListItem key={index}>
                                                 <Typography variant="body2" color="text.secondary">

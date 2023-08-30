@@ -7,10 +7,9 @@
 import React, { useState } from 'react';
 
 import MovieModal from '../../modal/MovieModal';
-import ResultButton from './ResultButton';
 import { useDispatch } from 'react-redux';
 import { setDetailedDefault } from '../../app/movieSlice';
-import { Card, CardActions, CardMedia, CardContent, Typography } from '@mui/material';
+import { Card, CardMedia, CardContent, Typography } from '@mui/material';
 
 // Use a question mark as a placeholder image for movies that have no poster.
 const noPosterImg = "https://upload.wikimedia.org/wikipedia/commons/2/28/Question_mark_white.png";
@@ -33,7 +32,7 @@ function Result(props) {
                 sx={{ height: 550, backgroundColor: "#9f94a0", cursor: "pointer", "&:hover": { opacity: 0.5 } }}
                 component="img"
                 className="open-modal"
-                onClick={ handleOpen }
+                onClick={handleOpen}
                 alt="Movie Poster"
                 image={
                     // If there is a poster image URL provided (not 'N/A'), use it.
@@ -43,7 +42,7 @@ function Result(props) {
                 title="Movie Poster"
             />
             <CardContent>
-                { open && <MovieModal open={open} handleClose={ handleClose } data={props.data} />}
+                {open && <MovieModal open={open} handleClose={handleClose} data={props.data} />}
                 <Typography gutterBottom variant="h6" component="h6" color="#603840" noWrap>
                     {props.data['Title']}
                 </Typography>
@@ -51,9 +50,6 @@ function Result(props) {
                     {props.data['Year']}
                 </Typography>
             </CardContent>
-            <CardActions style={{ justifyContent: 'right' }}>
-                <ResultButton data={props.data} close={handleClose}/>
-            </CardActions>
         </Card>
     );
 }

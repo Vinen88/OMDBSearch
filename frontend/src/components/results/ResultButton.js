@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { saveMovie } from '../../app/movieSlice';
@@ -15,6 +15,10 @@ function ResultButton(props) {
         setSaved(true);
         dispatch(saveMovie(imdbID));
     };
+    console.log(props.data['saved'], props.data['Title'])
+    useEffect(() => {
+        setSaved(props.data['saved']);
+    }, [props.data]);
 
     if (saved) {
         return (
