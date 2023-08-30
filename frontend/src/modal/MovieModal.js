@@ -14,6 +14,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Collapse from '@mui/material/Collapse';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 
 const noPosterImg = "https://upload.wikimedia.org/wikipedia/commons/2/28/Question_mark_white.png";
 
@@ -129,16 +130,20 @@ function MovieModal({ open, handleClose, data }) {
                     {(typeof (detailedMovieResult['dddWarnings']) !== 'undefined' && detailedMovieResult['dddWarnings'].length !== 0) &&
                         <Collapse in={expanded} timeout="auto" unmountOnExit>
                             <CardContent>
-                                <Typography>
-                                    <b>CONTENT WARNINGS:</b>
+                                <Typography variant="body2" color="text.primary">
+                                    <WarningRoundedIcon color="error" />
+                                    <b> CONTENT WARNINGS </b>
+                                    <WarningRoundedIcon color="error" />
                                 </Typography>
                                 <List>
-                                    {detailedMovieResult['dddWarnings'].length !== 0 &&
-                                        <ListItem>
-                                            <Typography>
-                                                <b>DDD:</b> {detailedMovieResult['dddWarnings']}
-                                            </Typography>
-                                        </ListItem>}
+                                    {(typeof (detailedMovieResult['dddWarnings']) !== 'undefined' && detailedMovieResult['dddWarnings'].length !== 0) &&
+                                        detailedMovieResult['dddWarnings'].map((warning, index) => (
+                                            <ListItem key={index}>
+                                                <Typography variant="body2" color="text.secondary">
+                                                    {warning.charAt(0).toUpperCase() + warning.slice(1)}
+                                                </Typography>
+                                            </ListItem>
+                                        ))}
                                 </List>
                             </CardContent>
                         </Collapse>
