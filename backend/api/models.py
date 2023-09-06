@@ -43,6 +43,10 @@ class SavedResult(models.Model):
     dddid = models.CharField(max_length=40, blank=True)
     dddURL = models.CharField(max_length=150, blank=True)
     dddWarnings = models.JSONField(blank=True)
+    tmdbid = models.CharField(max_length=40, blank=True)
+    tmdbURL = models.CharField(max_length=250, blank=True)
+    tmdbposter = models.CharField(max_length=250, blank=True)
+    tmdbbackdrop = models.CharField(max_length=250, blank=True)
 
     def __str__(self) -> str:
         return self.Title
