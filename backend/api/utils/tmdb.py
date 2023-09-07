@@ -22,32 +22,42 @@ def get_base_image_url() -> dict | None:
     backdropSizes = data["images"]["backdrop_sizes"]
     posterSizes = data["images"]["poster_sizes"]
     lang = "?include_image_language=en"
-    pprint([baseURL, backdropSizes, posterSizes, lang])
     return [baseURL, backdropSizes, posterSizes, lang]
 
 
-def get_movie_details(movie_id: int) -> dict | None:
-    url = f"https://api.themoviedb.org/3/movie/{movie_id}"
+def get_movie_details(movieid: int) -> dict | None:
+    url = f"https://api.themoviedb.org/3/movie/{movieid}"
     headers = {
         "accept": "application/json",
         "Authorization": "Bearer " + TMDB_TOKEN,
     }
     api_call = requests.get(url, headers=headers)
     data = api_call.json()
-    pprint(data)
     return data
 
 
 def tmdb_search_imdbid(imdbid: str) -> dict | None:
-    url = f"https://api.themoviedb.org/3/find/{imdbid}?external_source=imdb_id&language=en"
+    url = f"https://api.themoviedb.org/3/find/{imdbid}?external_source=imdb_id&language=en,null"
     headers = {
         "accept": "application/json",
         "Authorization": "Bearer " + TMDB_TOKEN,
     }
     api_call = requests.get(url, headers=headers)
     data = api_call.json()
-    pprint(data)
+    # add error checking lol
     return data
 
 
-get_base_image_url()
+def get_tmdb_data(imdbid: str):
+    data = {}
+    base, backdropsizes, posterSizes, lang = get_base_image_url()
+    data["tmdbid"] = tmdb_search_imdbid(imdbid)["movie_results"][0]["id"]
+    movie_data = get_movie_details(data["tmdbid"])
+    pprint(movie_data)
+    data["tmdbposter"] = movie_data["poster_path"]
+    data["tmdbbackdrop"] = movie_data["backdrop_path"]
+    data["tmdbURL"] = f"https://www.themoviedb.org/movie/{data['tmdbid']}"
+    return data
+
+
+get_tmdb_data("tt1517268")

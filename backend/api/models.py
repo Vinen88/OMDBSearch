@@ -32,7 +32,6 @@ class SavedResult(models.Model):
     Ratings = models.JSONField(blank=True)
     Metascore = models.CharField(max_length=10, blank=True)
     imdbRating = models.CharField(max_length=10, blank=True)
-    imdbVotes = models.CharField(max_length=20, blank=True)
     imdbID = models.CharField(max_length=20, unique=True)
     Type = models.CharField(max_length=20, blank=True)
     DVD = models.CharField(max_length=20, blank=True)
