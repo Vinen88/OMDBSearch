@@ -35,7 +35,7 @@ function MovieModal({ open, handleClose, data }) {
     const [expanded, setExpanded] = React.useState(false);
     useEffect(() => {
         setDetailedDefault();
-        dispatch(fetchmoviedetails(data['imdbID']));
+        dispatch(fetchmoviedetails(data['imdbID'], data['Title'], data['Year']));
     }, [data, dispatch]);
     const detailedMovieResult = useSelector(selectDetailed); // maybe move into useEffect
     const handleExpandClick = () => {

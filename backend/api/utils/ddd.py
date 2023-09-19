@@ -37,8 +37,13 @@ def search_ddd(searchTerm: str, year: str) -> str | None:
     cleansearchTerm = remove_punctuation(searchTerm)
     url = f"https://www.doesthedogdie.com/dddsearch?q={cleansearchTerm}"
     headers = {"Accept": "application/json", "x-api-key": DOG_DIE_KEY}
-    api_call = requests.get(url, headers=headers)
+    try:
+        api_call = requests.get(url, headers=headers, timeout=3)
+    except requests.exceptions.Timeout:
+        return None
     correct = None
+    if api_call.status_code != 200:
+        return None
     for item in api_call.json()["items"]:
         if item["name"].lower() == searchTerm.lower() and item["releaseYear"] == year:
             correct = item

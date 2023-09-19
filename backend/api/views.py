@@ -76,6 +76,8 @@ class DetailedMovieView(APIView):
     # view for getting detailed movie info for modal/popup when clicking poster
     def get(self, request, *args, **kwargs):
         imdbID = request.query_params.get("imdbID")
+        title = request.query_params.get("title")
+        year = request.query_params.get("year")
         if SavedResult.objects.filter(imdbID=imdbID).exists():
             movie = SavedResult.objects.get(imdbID=imdbID)
             serializer = SavedSerializer(movie)
@@ -90,7 +92,7 @@ class DetailedMovieView(APIView):
         data["dddURL"] = f"https://www.doesthedogdie.com/media/{dddid}"
         data["dddid"] = dddid
         serializer = SavedSerializer(data=data)
-        if serializer.is_valid():
+        if serializer.is_valid() and dddid is not None:
             try:
                 serializer.save()
             except IntegrityError:
