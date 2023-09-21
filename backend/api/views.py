@@ -7,6 +7,9 @@ from .utils.ddd import get_ddd, search_ddd
 from django.db.utils import IntegrityError
 import os
 import requests
+import asyncio
+from .utils.asyncMovies import getMovieDetails
+from pprint import pprint
 
 load_dotenv()
 
@@ -78,6 +81,8 @@ class DetailedMovieView(APIView):
         imdbID = request.query_params.get("imdbID")
         title = request.query_params.get("title")
         year = request.query_params.get("year")
+        details = asyncio.run(getMovieDetails(imdbID, title, year))
+        pprint(details[0].json())
         if SavedResult.objects.filter(imdbID=imdbID).exists():
             movie = SavedResult.objects.get(imdbID=imdbID)
             serializer = SavedSerializer(movie)
