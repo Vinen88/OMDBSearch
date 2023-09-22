@@ -46,3 +46,14 @@ this starts the backend at [http://localhost:8000](http://localhost:8000) there 
 ## Features
 
 You can click on a movie poster to see detailed results or the save button to save it to the database, you can see saved movies by clicking the saved movie toggle you can also delete them from here or from search results by clicking the trashcan icon, you can go back to your search results by clicking the search toggle.
+
+## Todo
+
+- [ ] fix double calls to backend when clicking on a movie poster
+- [ ] add a loading spinner
+- [ ] finish search autocomplete
+- [ ] add infinite scroll
+- [ ] add users/authentication/social logins
+- [ ] finish TMDB integration
+- [ ] add more tests
+- [ ] establish CI/CD pipeline

@@ -42,9 +42,16 @@ def create_tasks(urls, client):
     return tasks
 
 
-async def getMovieDetails(imdbID, title, year):
-    urls = create_urls(imdbID, title, year)
+async def make_async_requests(urls):
     async with httpx.AsyncClient() as client:
         tasks = create_tasks(urls, client)
         results = await asyncio.gather(*tasks)
         return results
+
+
+def getMovieDetails(imdbID, title, year):
+    urls = create_urls(imdbID, title, year)
+    results = asyncio.run(make_async_requests(urls))
+    for i, result in enumerate(results):
+        print(i, result.url)
+    return results
