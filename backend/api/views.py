@@ -8,7 +8,6 @@ from django.db.utils import IntegrityError
 import os
 import requests
 from .utils.asyncMovies import getMovieDetails
-from pprint import pprint
 
 load_dotenv()
 

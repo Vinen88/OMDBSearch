@@ -30,7 +30,7 @@ def create_tasks(urls, client):
     ddd_headers = {"Accept": "application/json", "x-api-key": DOG_DIE_KEY}
     tmdb_headers = {
         "accept": "application/json",
-        "Authorization": "Bearer " + TMDB_TOKEN,
+        "Authorization": f"Bearer {TMDB_TOKEN}",
     }
     for key, value in urls.items():
         if key == "DDD":
@@ -53,5 +53,29 @@ def getMovieDetails(imdbID, title, year):
     urls = create_urls(imdbID, title, year)
     results = asyncio.run(make_async_requests(urls))
     for i, result in enumerate(results):
-        print(i, result.url)
+        # print(result.text)
+        url = str(result.url)
+        if "themoviedb" in url and "configuration" in url:
+            print("TMDB CONFIG")
+        elif "themoviedb" in url:
+            print("TMDB")
+        elif "doesthedogdie" in url:
+            print("DDD")
+            dddid = get_dddid(result, title, year)
+        elif "omdbapi" in url:
+            data = result.json()
+    data["dddid"] = dddid
+    data["dddURL"] = f"https://www.doesthedogdie.com/media/{dddid}"
+    # TODO: fetch warnings from DDD
+    data["saved"] = True
     return results
+
+
+def get_dddid(searchResults, searchTerm, year):
+    correct = None
+    for item in searchResults.json()["items"]:
+        if item["name"].lower() == searchTerm.lower() and item["releaseYear"] == year:
+            correct = item
+            break
+    if correct is not None:
+        return correct["id"]
