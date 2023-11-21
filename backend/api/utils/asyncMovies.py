@@ -2,6 +2,7 @@ import asyncio
 import httpx
 from dotenv import load_dotenv
 import os
+from pprint import pprint
 
 load_dotenv()
 
@@ -56,7 +57,7 @@ def getMovieDetails(imdbID, title, year):
         # print(result.text)
         url = str(result.url)
         if "themoviedb" in url and "configuration" in url:
-            print("TMDB CONFIG")
+            pprint(result.json())
         elif "themoviedb" in url:
             print("TMDB")
         elif "doesthedogdie" in url:
