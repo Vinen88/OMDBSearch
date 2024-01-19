@@ -1,9 +1,9 @@
-from dotenv import load_dotenv
 import os
-import requests
-from string import punctuation
 import re
+from string import punctuation
 
+import requests
+from dotenv import load_dotenv
 
 load_dotenv()
 

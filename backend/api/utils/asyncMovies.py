@@ -1,8 +1,9 @@
 import asyncio
-import httpx
-from dotenv import load_dotenv
 import os
 from pprint import pprint
+
+import httpx
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -20,9 +21,7 @@ def create_urls(imdbID, title, year):
     urls["OMDB"] = OMDB_URL_BASE.format(imdbID, OMDB_API_KEY)
     urls["DDD"] = DDD_URL_SEARCH.format(f"{title} {year}")
     urls["TMDB_config"] = "https://api.themoviedb.org/3/configuration"
-    urls[
-        "TMDB"
-    ] = f"https://api.themoviedb.org/3/find/{imdbID}?external_source=imdb_id&language=en,null"
+    urls["TMDB"] = f"https://api.themoviedb.org/3/find/{imdbID}?external_source=imdb_id&language=en,null"
     return urls
 
 

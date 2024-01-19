@@ -1,13 +1,15 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
+import os
+
+import requests
+from django.db.utils import IntegrityError
 from dotenv import load_dotenv
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from .models import SavedResult
 from .serializers import SavedSerializer
-from .utils.ddd import get_ddd, search_ddd
-from django.db.utils import IntegrityError
-import os
-import requests
 from .utils.asyncMovies import getMovieDetails
+from .utils.ddd import get_ddd, search_ddd
 
 load_dotenv()
 
@@ -24,9 +26,7 @@ class SearchView(APIView):
         search_result = data["Search"]
         # check if data is already in database and add saved to json.
         for i in range(len(search_result)):
-            search_result[i]["saved"] = SavedResult.objects.filter(
-                imdbID=search_result[i]["imdbID"]
-            ).exists()
+            search_result[i]["saved"] = SavedResult.objects.filter(imdbID=search_result[i]["imdbID"]).exists()
         data["Search"] = search_result
         # maybe add pagination to api call
         return Response(data)
@@ -76,7 +76,7 @@ class DetailedMovieView(APIView):
     # probably needs more error checking
     # view for getting detailed movie info for modal/popup when clicking poster
     def get(self, request, *args, **kwargs):
-        imdbID = request.query_params.get("imdbID")
+        imdbID = request.query_params.get("imdbIB")
         title = request.query_params.get("title")
         year = request.query_params.get("year")
         getMovieDetails(imdbID, title, year)
